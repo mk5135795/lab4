@@ -130,11 +130,16 @@ int k(int n){
     sprawdzalem zaleznosci pomiedzy wielokrotnosciami, wspolnymi dzielnikami i przepisywalem to na system binarny,
     a i tak nie jest idealnie.
     */
-    int _k(0), div_2(0), div_5(0), tmp(n);
-    while(tmp > 0 && ((tmp % 10) == 0 || (tmp % 10) == 1))
-        tmp /= 10;
-    if(tmp == 0)
-        return 1;
+    int _k(0), div_2(0), div_5(0);
+    {
+        int tmp(n);
+        while(tmp > 0 && ((tmp % 10) == 0 || (tmp % 10) == 1))
+            tmp /= 10;
+        if(tmp == 0)
+            return 1;
+    }
+    while(n % 10 == 0)
+        n /= 10;
     while(n % 2 == 0 && n != 0)
     {
         n /= 2;
@@ -153,17 +158,17 @@ int k(int n){
     return _k;
 }
 
-int k_manual(int n){//goto metoda dla tych co nie umieja
+int k_manual(int n){//goto zadania wymagaja goto rozwiazan
     int tmp(0), _k(1);
     while(_k++ > 0)
     {
         tmp = _k * n;
+        if(tmp < 0)
+            return 0;
         while(tmp > 0 && ((tmp % 10) == 0 || (tmp % 10) == 1))
             tmp /= 10;
         if(tmp == 0)
             break;
     }
-    if(_k < 0)
-        return 0;
     return _k;
 }

@@ -7,6 +7,8 @@ const char *print_string(int v);
 char *dig(int n);
 int k(int n);
 int k_manual(int n);
+int k_manual_old(int n);
+int pow(int a, int b);
 
 int main(int argc, char *argv[])
 {
@@ -155,10 +157,34 @@ int k(int n){
         _k *= 5;
     while(div_5-- > 0)
         _k *= 2;
+    if(_k < 0)
+        return 0;
     return _k;
 }
 
-int k_manual(int n){//goto zadania wymagaja goto rozwiazan
+int k_manual(int n){
+    for(int i(0), p(0), _k(1); n > 0 && i < 0b1111111111; i++, _k++)
+    {
+        for(p = 0; ;p++)
+        {
+            if(int(_k / pow(10, p)) % 10 == 2)
+            {
+                _k -= 2 * pow(10, p);
+                _k += pow(10, p + 1);
+            }
+            else
+                break;
+        }
+        if(_k % n == 0)
+        {
+            _k /= n;
+            return _k;
+        }
+    }
+    return 0;
+}
+
+int k_manual_old(int n){//goto zadania wymagaja goto rozwiazan
     int tmp(0), _k(1);
     while(_k++ > 0)
     {
@@ -171,4 +197,14 @@ int k_manual(int n){//goto zadania wymagaja goto rozwiazan
             break;
     }
     return _k;
+}
+
+int pow(int a, int b){
+    int c(a);
+    if(b == 0)
+        return 1;
+    b--;
+    while(b-- > 0)
+        c *= a;
+    return c;
 }

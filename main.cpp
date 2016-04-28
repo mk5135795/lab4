@@ -8,12 +8,12 @@ char *dig(int n);
 int k(int n);
 int k_manual(int n);
 int k_manual_old(int n);
-int pow(int a, int b);
+int pow(int a, int b);//nie bylem zadowolony z dzialania pow() z math.h
 
 int main(int argc, char *argv[])
 {
     if(argc > 1)
-        printf("k = %s\n", print_string(k(atoi(argv[1]))));
+        printf("k = %s\n", print_string( k( atoi( argv[1] ) ) ) );
     return 0;
 }
 
@@ -132,6 +132,11 @@ int k(int n){
     sprawdzalem zaleznosci pomiedzy wielokrotnosciami, wspolnymi dzielnikami i przepisywalem to na system binarny,
     a i tak nie jest idealnie.
     */
+    /*
+    ta redukcja prawie nie wplywa na czas obliczen, a znaczaco zwieksza precyzje,
+    jest w stanie znalezc rozwiazania dla np. k(144) = 7'716'049'375 (5 * k(72)) tylko ze przekraczaja zakres int
+    ma wyswietlac wynik miedzy 0 - 1'000'000 wiec nie ma potrzeby przerabiac na long long czy cos
+    */
     int _k(0), div_2(0), div_5(0);
     {
         int tmp(n);
@@ -199,7 +204,7 @@ int k_manual_old(int n){//goto zadania wymagaja goto rozwiazan
     return _k;
 }
 
-int pow(int a, int b){
+int pow(int a, int b){//około 1% poprawy wzgledem pow() z math.h
     int c(a);
     if(b == 0)
         return 1;

@@ -3,7 +3,7 @@
 
 using namespace std;
 
-const char *print_string(int v);
+const char *print_num(int v);
 char *dig(int n);
 int k(int n);
 int k_manual(int n);
@@ -13,11 +13,16 @@ int pow(int a, int b);//nie bylem zadowolony z dzialania pow() z math.h
 int main(int argc, char *argv[])
 {
     if(argc > 1)
-        printf("k = %s\n", print_string( k( atoi( argv[1] ) ) ) );
+        printf("k = %s\n", print_num( k( atoi( argv[1] ) ) ) );
+    /*
+    niby powinienem cos zmienic, dodac if(), bo k() ma zakres 0 - 2147483647 (ujemna sa obcinane), a print_num() 0 - 1'000'000
+    i wyswietla "zero" lub "poza zakresem", gdy wynik jest poza zakresem print_num(),
+    ale z drugiej strony jest to jakas informacja ze wynik da sie wyswietlic ale nie za pomoca funkcji print_num()
+    */
     return 0;
 }
 
-const char *print_string(int v){
+const char *print_num(int v){
     string str = to_string(v), tmp;
     if(v < 0)
         v *= -1;
@@ -134,8 +139,9 @@ int k(int n){
     */
     /*
     ta redukcja prawie nie wplywa na czas obliczen, a znaczaco zwieksza precyzje,
-    jest w stanie znalezc rozwiazania dla np. k(144) = 7'716'049'375 (5 * k(72)) tylko ze przekraczaja zakres int
-    ma wyswietlac wynik miedzy 0 - 1'000'000 wiec nie ma potrzeby przerabiac na long long czy cos
+    jest w stanie znalezc rozwiazania dla np. k(144) = 7'716'049'375 (5 * k(72)) tylko ze przekraczaja zakres signed int
+    pewnie by sie dalo zrobic na unsigned, chociaz ujemny zakres jest wykorzystywany (jako informacja ze zakres jest przekroczony)
+    ma wyswietlac wynik miedzy 0 - 1'000'000 wiec nie ma potrzeby przerabiac na unsigned, long long czy cos
     */
     int _k(0), div_2(0), div_5(0);
     {
